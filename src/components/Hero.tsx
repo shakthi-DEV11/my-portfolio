@@ -3,12 +3,12 @@
 import { useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Points, PointMaterial } from "@react-three/drei";
-import * as random from "three/src/math/MathUtils";
+import { MathUtils } from "three";
 import { motion } from "framer-motion";
 import { Download, ChevronRight } from "lucide-react";
 
 function ParticleField() {
-  const ref = useRef<any>();
+  const ref = useRef<any>(null);
   
   // Generate random particles
   const sphere = new Float32Array(5000 * 3);
@@ -42,56 +42,87 @@ export default function Hero() {
   return (
     <section className="relative h-screen w-full overflow-hidden flex items-center justify-center">
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-6 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          <h2 className="text-secondary font-mono mb-4 text-xl tracking-widest uppercase">Hello</h2>
-        </motion.div>
+      <div className="relative z-10 container mx-auto px-6 flex flex-col-reverse lg:flex-row items-center justify-between gap-12 lg:gap-8">
         
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-        >
-          <h1 className="text-5xl sm:text-7xl md:text-8xl font-bold mb-6 tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400 drop-shadow-[0_0_15px_rgba(0,245,255,0.3)]">
-            I&apos;M SHAKTHI
-          </h1>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-        >
-          <p className="text-xl sm:text-2xl text-gray-400 max-w-2xl mx-auto mb-12">
-            WEB DEVELOPER <br />
-            <span className="text-primary text-sm sm:text-lg">BUILDING MODERN DIGITAL EXPERIENCES THROUGH CODE.</span>
-          </p>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-6"
-        >
-          <a href="#projects" className="group relative px-8 py-4 bg-primary text-black font-bold uppercase tracking-wider overflow-hidden rounded-sm w-full sm:w-auto inline-block text-center">
-            <span className="relative z-10 flex items-center justify-center gap-2">
-              View Projects <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </span>
-            <div className="absolute inset-0 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left z-0" />
-          </a>
-          
-          <a 
-            href="/resume" 
-            className="group px-8 py-4 border border-glass-border hover:border-primary text-white font-bold uppercase tracking-wider transition-colors w-full sm:w-auto rounded-sm flex items-center justify-center gap-2 glass-panel"
+        {/* Left Column: Text & Buttons */}
+        <div className="w-full lg:w-1/2 text-center lg:text-left flex flex-col items-center lg:items-start">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <Download className="w-5 h-5" /> Resume
-          </a>
-        </motion.div>
+            <h2 className="text-secondary font-mono mb-4 text-xl tracking-widest uppercase">Hello</h2>
+          </motion.div>
+          
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            <h1 className="text-5xl sm:text-7xl md:text-8xl font-bold mb-6 tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400 drop-shadow-[0_0_15px_rgba(0,245,255,0.3)]">
+              I&apos;M SHAKTHI
+            </h1>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+          >
+            <p className="text-xl sm:text-2xl text-gray-400 max-w-2xl mb-12">
+              WEB DEVELOPER <br />
+              <span className="text-primary text-sm sm:text-lg">BUILDING MODERN DIGITAL EXPERIENCES THROUGH CODE.</span>
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+            className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto"
+          >
+            <a href="#projects" className="group relative px-8 py-4 bg-primary text-black font-bold uppercase tracking-wider overflow-hidden rounded-sm w-full sm:w-auto text-center">
+              <span className="relative z-10 flex items-center justify-center gap-2">
+                View Projects <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </span>
+              <div className="absolute inset-0 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left z-0" />
+            </a>
+            
+            <a 
+              href="/resume" 
+              className="group px-8 py-4 border border-glass-border hover:border-primary text-white font-bold uppercase tracking-wider transition-colors w-full sm:w-auto rounded-sm flex items-center justify-center gap-2 glass-panel"
+            >
+              <Download className="w-5 h-5" /> Resume
+            </a>
+          </motion.div>
+        </div>
+
+        {/* Right Column: Logo */}
+        <div className="w-full lg:w-1/2 flex justify-center items-center mt-12 lg:mt-0">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, delay: 0.5 }}
+            className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 rounded-full overflow-hidden border border-primary/30 shadow-[0_0_60px_rgba(0,245,255,0.2)] bg-[#050505] flex items-center justify-center"
+          >
+            <div className="absolute inset-0 flex items-center justify-center text-primary/20 z-0">
+              <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="4 17 10 11 4 5"></polyline>
+                <line x1="12" y1="19" x2="20" y2="19"></line>
+              </svg>
+            </div>
+            <img 
+              src="/logo.png" 
+              alt="Developer Logo" 
+              className="object-cover w-full h-full relative z-10"
+              onError={(e) => {
+                e.currentTarget.style.display = 'none';
+              }}
+            />
+            {/* Glowing overlay effect */}
+            <div className="absolute inset-0 bg-primary/10 mix-blend-overlay rounded-full pointer-events-none z-20"></div>
+          </motion.div>
+        </div>
       </div>
       
       {/* Scroll indicator */}
